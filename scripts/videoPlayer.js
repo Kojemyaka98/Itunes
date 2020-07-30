@@ -1,10 +1,6 @@
+import { addZero } from './supScript.js';
+
 export const videoPlayerInit = () => {
-// video-player
-// video-button__play
-// video-button__stop
-// video-time__passed
-// video-progress
-// video-time__total
 
 const videoPlayer = document.querySelector('.video-player');
 const videoButtonPlay = document.querySelector('.video-button__play');
@@ -43,7 +39,7 @@ const stopPlay = () => {
 
 
 // условие ? (код который идет до :, если оно верно) : (условие неверно, тогда выполнится код справа )
-const addZero = x => x < 10 ? '0' + x : x; //тернарный оператор
+//const addZero = x => x < 10 ? '0' + x : x; //тернарный оператор
 // добавление нуля при воспроизведении видео 00:01 и т.п
 
 videoPlayer.addEventListener('click',togglePlay);
@@ -61,14 +57,14 @@ videoPlayer.addEventListener('timeupdate', () => {
 
     videoProgress.value = (currentTime / duration) * 100; // сколько прошло времени( бегунок прокрутки)
     //current time
-    let minutePassed = Math.floor(currentTime / 60); //секунды делим на минуты дабы получить вывод в минутах
-    let secondPassed = Math.floor(currentTime % 60); //  остаток от деления
+    let minutePassed = Math.floor(currentTime / 60) || '0'; //секунды делим на минуты дабы получить вывод в минутах
+    let secondPassed = Math.floor(currentTime % 60) || '0'; //  остаток от деления
 // duration
-    let minuteTotal = Math.floor(duration / 60);
-    let secondTotal = Math.floor(duration % 60);
+    let minuteTotal = Math.floor(duration / 60) || '0';
+    let secondTotal = Math.floor(duration % 60) || '0';
 // вывод продолжительности в самом плеере (мин/cек)
-    videoTimePassed.textContent = addZero(minutePassed) + ':' + addZero(secondPassed);
-    videoTimeTotal.textContent = addZero(minuteTotal) + ':' + addZero(secondTotal);
+    videoTimePassed.textContent = `${addZero(minutePassed)}:${addZero(secondPassed)}`;
+    videoTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(secondTotal)}`;
 });
 
 // возможность перелистывания 
@@ -76,7 +72,7 @@ videoProgress.addEventListener('change', () => {
 const duration = videoPlayer.duration;
 const value = videoProgress.value;
 
-videoPlayer.currentTime = (value * duration) / 100; //
+videoPlayer.currentTime = (value * duration) / 100;
 
 });
 };
